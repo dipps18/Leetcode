@@ -7,20 +7,31 @@ public:
         int n = max(matrix.size(), matrix[0].size());
         for(int l = 0; l < m; l++)
         {
-            vector<int> colSum(n, 0);
+            vector<int> sum(n, 0);
             for(int r = l; r < m; r++)
             {
                 for(int k = 0; k < n; k++)
                 {
-                    if(rowGreater) colSum[k] += matrix[k][r];
-                    else colSum[k] += matrix[r][k];
+                    if(rowGreater) sum[k] += matrix[k][r];
+                    else sum[k] += matrix[r][k];
                 }
+                int curSum = 0;
+                int kMaxSum = 0;
+                for(int i = 0; i < n; i++)
+                {
+                    curSum = max(sum[i], curSum + sum[i]);
+                    kMaxSum = max(curSum, kMaxSum);
+                }
+                if(kMaxSum <= k && kMaxSum > 0){
+                    maxSum = max(kMaxSum, maxSum);
+                    continue;
+                }
+                curSum = 0;
                 set<int> cum;
                 cum.insert(0);
-                int curSum = 0;
-                for(int i = 0; i < colSum.size(); i++)
+                for(int i = 0; i < sum.size(); i++)
                 {
-                    curSum += colSum[i];
+                    curSum += sum[i];
                     auto it = cum.lower_bound(curSum - k);
                     if(it != cum.end())
                     {
