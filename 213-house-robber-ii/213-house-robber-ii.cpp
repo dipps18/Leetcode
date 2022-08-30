@@ -8,13 +8,15 @@ public:
     
     int robHelper(vector<int>& nums, int start, int end)
     {
-        vector<int> maxLoot(nums.size(), 0);
-        maxLoot[start] = nums[start];
-        maxLoot[start + 1] = max(nums[start], nums[start + 1]);
+        int max_two_before = nums[start];
+        int max_one_before = max(nums[start], nums[start + 1]);
+        int max_cur = max_one_before;
         for(int i = start + 2; i < end; i++)
         {
-            maxLoot[i] = max(maxLoot[i - 1], maxLoot[i - 2] + nums[i]);
+            max_cur = max(max_one_before, nums[i] + max_two_before);
+            max_two_before = max_one_before;
+            max_one_before = max_cur;
         }
-        return maxLoot[end - 1];
+        return max_cur;
     }
 };
