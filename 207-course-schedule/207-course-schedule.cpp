@@ -12,8 +12,9 @@ public:
         return true;
     }
     
-    bool helper(unordered_set<int>& visited, vector<vector<int>>& courses, int& course)
+    bool helper(unordered_set<int> &visited, vector<vector<int>>& courses, int course)
     {
+        
         if(!visited.insert(course).second) return false;
         for(int j = 0; j < courses[course].size(); j++)
         {
