@@ -5,7 +5,7 @@ public:
         int m = s.size();
         vector<vector<bool>> visited(m, vector<bool>(m, false));
         int maxL = m/2, maxR = m/2;
-        helper(s, m/2, m/2, maxL, maxR, visited);
+        helper(s, m/2 - 1, m/2, maxL, maxR, visited);
         output = s.substr(maxL, maxR - maxL + 1);
         return output;
     }
@@ -25,9 +25,7 @@ public:
             helper(s, l - 1, r + 1, maxL, maxR, visited);
         }
         helper(s, l, l + 1, maxL, maxR, visited);
-        helper(s, l - 1, l, maxL, maxR, visited);
         helper(s, l - 1, l + 1, maxL, maxR, visited);
-        helper(s, r - 1, r, maxL, maxR, visited);
         helper(s, r, r + 1, maxL, maxR, visited);
         helper(s, r - 1, r + 1, maxL, maxR, visited);
     }
