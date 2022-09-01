@@ -19,7 +19,7 @@ public:
         {
             if(!helper(visited, courses, courses[course][j])) return false;
         }
-        courses[course] = {};
+        courses[course].clear();
         visited.erase(course);
         return true;
     }
