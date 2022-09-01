@@ -5,14 +5,10 @@ public:
         vector<vector<int>> courses(numCourses);
         
         for(int i = 0; i < prerequisites.size(); i++)
-        {
             courses[prerequisites[i][0]].push_back(prerequisites[i][1]);
-        }
         
         for(int i = 0; i < courses.size(); i++)
-        {
             if(!helper(visited, courses, i)) return false;
-        }
         return true;
     }
     
