@@ -1,32 +1,26 @@
 class Solution {
 public:
     string longestPalindrome(string s) {
-        string output;
-        int m = s.size();
-        vector<vector<bool>> visited(m, vector<bool>(m, false));
-        int maxL = m/2, maxR = m/2;
-        helper(s, m/2 - 1, m/2, maxL, maxR, visited);
-        output = s.substr(maxL, maxR - maxL + 1);
-        return output;
-    }
-    
-    void helper(string& s, int l, int r, int& maxL, int& maxR, vector<vector<bool>>& visited)
-    {
-        if(l < 0 || r >= s.size()) return;
-        if(visited[l][r]) return;
-        visited[l][r] = true;
-        if(s[l] == s[r])
+        int l, r;
+        int maxL = 0, maxLen = 1;
+        for(int i = 0; i < s.size(); i++)
         {
-            if(r - l > maxR - maxL)
+            r = i;
+            while(r < s.size() && s[i] == s[r])
+                r++;
+            
+            l = i - 1;
+            while(l >= 0 && r < s.size() && s[l] == s[r])
             {
-                maxR = r;
-                maxL = l;
+                l--;
+                r++;
             }
-            helper(s, l - 1, r + 1, maxL, maxR, visited);
+            if(r - l - 1 > maxLen)
+            {
+                maxL = l + 1;
+                maxLen = r - l - 1;
+            }
         }
-        helper(s, l, l + 1, maxL, maxR, visited);
-        helper(s, l - 1, l + 1, maxL, maxR, visited);
-        helper(s, r, r + 1, maxL, maxR, visited);
-        helper(s, r - 1, r + 1, maxL, maxR, visited);
+        return s.substr(maxL, maxLen);
     }
 };
