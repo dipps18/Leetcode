@@ -1,15 +1,15 @@
 class Solution {
 public:
     int numDecodings(string s) {
-        vector<int> dp(100, 0);
+        vector<int> dp(100, -1);
         return helper(s, 0, dp);
     }
     
     int helper(string& s, int i, vector<int>&dp)
     {        
         if(s[i] == '0') return dp[i] = 0;
-        if(i >= s.size()) return 1;
-        if(dp[i]) return dp[i];
+        if(i == s.size()) return 1;
+        if(dp[i] != -1) return dp[i];
     
         int res = helper(s, i + 1, dp);
         if(i + 1 < s.size() && ((s[i] == '2' && s[i + 1] <= '6') || s[i] == '1'))
