@@ -1,20 +1,16 @@
 class Solution {
 public:
     int numDecodings(string s) {
-        vector<int> dp(100, 0);
-        return helper(s, 0, dp);
+        int n = s.size();
+        vector<int> mem(n+1,-1);
+        mem[n]=1;
+        return s.empty()? 0 : num(0,s,mem);   
     }
-    
-    int helper(string& s, int i, vector<int>&dp)
-    {        
-        if(s[i] == '0') return 0;
-        if(i >= s.size() - 1) return 1;
-        if(dp[i]) return dp[i];
-    
-        int res = helper(s, i + 1, dp);
-        if(i + 1 < s.size() && ((s[i] == '2' && s[i + 1] <= '6') || s[i] == '1'))
-            res += helper(s, i + 2, dp);
-        dp[i] = res;
-        return res;
+    int num(int i, string &s, vector<int> &mem) {
+        if(mem[i]>-1) return mem[i];
+        if(s[i]=='0') return mem[i] = 0;
+        int res = num(i+1,s,mem);
+        if(i<s.size()-1 && (s[i]=='1'||s[i]=='2'&&s[i+1]<'7')) res+=num(i+2,s,mem);
+        return mem[i] = res;
     }
 };
