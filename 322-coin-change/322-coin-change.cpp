@@ -10,6 +10,11 @@ public:
             for(int coin : coins)
             {
                 if(i - coin < 0) break;
+                if(dp[i - coin] == 0)
+                {
+                    dp[i] = 1;
+                    break;
+                }
                 if(dp[i - coin] != INT_MAX)
                     dp[i] = min(dp[i], 1 + dp[i - coin]);
             }
