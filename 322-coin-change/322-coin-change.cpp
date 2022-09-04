@@ -1,25 +1,26 @@
 class Solution {
 public:
     int coinChange(vector<int>& coins, int amount) {
-        int dp[++amount];
-        sort(coins.begin(), coins.end());
-        dp[0] = 0;
-        for(int i = 1; i < amount; i++)
+        unordered_set<int> added;
+        int cc = 0;
+        queue<int> amounts;
+        amounts.push(0);
+        while(!amounts.empty())
         {
-            dp[i] = INT_MAX;
-            for(int coin : coins)
-            {
-                if(i - coin < 0) break;
-                if(dp[i - coin] == 0)
-                {
-                    dp[i] = 1;
-                    break;
-                }
-                if(dp[i - coin] != INT_MAX)
-                    dp[i] = min(dp[i], 1 + dp[i - coin]);
+            int n = amounts.size();
+            for(int i = 0; i < n; i++)
+            {      
+                int cur = amounts.front();
+                amounts.pop();
+                if(cur == amount) return cc;
+                if(added.insert(cur).second == false || cur > amount) continue;
+                for(int c : coins) 
+                    if(c <= amount && c + cur <= amount)
+                        amounts.push(c + cur);
             }
+            cc++;
         }
-        return dp[amount - 1] == INT_MAX ? -1 : dp[amount - 1];
+        return -1;
     }
 
 };
