@@ -2,63 +2,44 @@ class Solution {
 public:
     vector<vector<int>> pacificAtlantic(vector<vector<int>>& heights) {
         int m = heights.size(), n = heights[0].size();
-        vector<vector<int>> dp(m, vector<int>(n, -1));
+        vector<vector<bool>> atlantic(m, vector<bool>(n, false));
+        vector<vector<bool>> pacific(m, vector<bool>(n, false));
         vector<vector<int>> output;
-        bool pacific = false, atlantic = false;
+        
+        //vertical
+        for(int i = 0; i < m; i++)
+        {
+            dfs(heights, pacific, -1, i, 0);
+            dfs(heights, atlantic, -1, i, n - 1);
+        }
+        
+        //horizontal
+        for(int j = 0; j < n; j++)
+        {
+            dfs(heights, pacific, -1, 0, j);
+            dfs(heights, atlantic, -1, m - 1, j);
+        }
+        
         for(int i = 0; i < m; i++)
         {
             for(int j = 0; j < n; j++)
             {
-                atlantic = false;
-                pacific = false;
-                if(helper(heights, i, j, dp, atlantic, pacific))
-                {
+                if(atlantic[i][j] && pacific[i][j])
                     output.push_back({i, j});
-                    dp[i][j] = 1;
-                }
-                else dp[i][j] = 0;
-        
             }
         }
         return output;
     }
     
-    bool helper(vector<vector<int>>& heights, int i, int j, vector<vector<int>>& dp, bool& atlantic, bool& pacific)
+    void dfs(vector<vector<int>>& heights, vector<vector<bool>>& visited, int prev, int i, int j)
     {
-        if(i == 0 || j == 0)
-        {
-            pacific = true;
-        }
-        if(i == heights.size() - 1 && j == 0 || (j == heights[0].size() - 1 && i == 0))
-        {
-            atlantic = true;
-            pacific = true;
-            return true;
-        }
-        if(i == heights.size() - 1 || j == heights[0].size() - 1)
-        {
-            atlantic = true;
-        }
-        if(atlantic && pacific) return true;
-        if(heights[i][j] == -1) return false;
-        if(dp[i][j] == 1) 
-        {
-            atlantic = true;
-            pacific = true;
-            return dp[i][j]; 
-        }
-        if(atlantic && pacific) return true;
+        if(i < 0 || j < 0 || j >= heights[0].size() || i >= heights.size() ||
+           heights[i][j] == -1 || visited[i][j] || prev > heights[i][j]) return;
+        visited[i][j] = true;
         int temp = heights[i][j];
         heights[i][j] = -1;
-        if(i + 1 < heights.size() && temp >= heights[i + 1][j])
-            helper(heights, i + 1, j, dp, atlantic, pacific);
-        if(i - 1 >= 0 && temp >= heights[i - 1][j])
-            helper(heights, i - 1, j, dp, atlantic, pacific);
-        if(j + 1 < heights[0].size() && temp >= heights[i][j + 1])
-            helper(heights, i, j + 1, dp, atlantic, pacific);
-        if(j - 1 >= 0 && temp >= heights[i][j - 1])
-            helper(heights, i, j - 1, dp, atlantic, pacific);
+        dfs(heights, visited, temp, i + 1, j); dfs(heights, visited, temp, i - 1, j); 
+        dfs(heights, visited, temp, i, j + 1); dfs(heights, visited, temp, i, j - 1);
         heights[i][j] = temp;
-        return (atlantic && pacific);
     }
 };
