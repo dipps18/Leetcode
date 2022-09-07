@@ -1,7 +1,7 @@
 class Solution {
 public:
     int lengthOfLIS(vector<int>& nums) {
-        unordered_map<int, int> dp;
+        vector<int> dp(nums.size() + 1, 0);
         int maxFreq = 0;
         for(int i = 0; i < nums.size(); i++)
         {
@@ -11,7 +11,7 @@ public:
         return maxFreq;
     }
     
-    int dfs(vector<int>& nums, unordered_map<int, int>& dp, int& maxFreq, int val, int idx)
+    int dfs(vector<int>& nums, vector<int>& dp, int& maxFreq, int val, int idx)
     {
         if(dp[idx]) return dp[idx];
         dp[idx] = 1;
