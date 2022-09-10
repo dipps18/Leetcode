@@ -1,11 +1,9 @@
 class MedianFinder {
 public:
-    int elems;
     //Every element in this heap should be greater than elements in the max heap;
     priority_queue <int, vector<int>, greater<int>> large; 
     priority_queue<int> small;
     MedianFinder() {
-        elems = 0;
     }
     
     void addNum(int num) {
@@ -24,11 +22,10 @@ public:
             small.pop();
             large.push(val);
         }
-        elems++;
     }
 
     double findMedian() {
-        if(elems % 2 != 0) 
+        if((large.size() + small.size()) % 2 != 0) 
             return small.top();
         return (large.top() + small.top()) / 2.0; 
     }
