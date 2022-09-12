@@ -11,17 +11,7 @@ public:
             int curWater = min(maxL, maxR) - height[cur];
             if(curWater > 0)
                 output += curWater;
-            if(maxL > maxR)
-            {
-                r--;
-                cur = r;
-            }
-            else
-            {
-                l++;
-                cur = l;
-            }
-            
+            cur = (maxL > maxR) ? --r : ++l;
         }
         return output;
     }
