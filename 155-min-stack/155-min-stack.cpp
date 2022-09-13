@@ -1,30 +1,49 @@
+class Node
+{
+    public:
+        int elem;
+        int min;
+        Node* next = nullptr;
+        Node* prev = nullptr;
+        Node(){}
+        Node(int elem)
+        {
+            this->elem = elem;
+        }
+};
 class MinStack {
-    vector<int> myStack;
-    vector<int> minStack;
 public:
+    Node* minStack = nullptr;
     MinStack() {
     }
     
     void push(int val) {
-        if(minStack.empty() || minStack.back() > val)
-            minStack.push_back(val);
+        if(minStack == nullptr)
+        {
+            minStack = new Node(val);
+            minStack->elem = val;
+            minStack->min = val;
+        }
         else
-            minStack.push_back(minStack.back());
-        myStack.push_back(val);
-
+        {
+            minStack->next = new Node(val);
+            minStack->next->prev = minStack;
+            minStack = minStack->next;
+            minStack->min = min(val, minStack->prev->min);
+        }
     }
     
     void pop() {
-        myStack.pop_back();
-        minStack.pop_back();
+        minStack = minStack->prev;
+        if(minStack) minStack->next = nullptr;
     }
     
     int top() {
-        return myStack.back();
+        return minStack->elem;
     }
     
     int getMin() {
-        return minStack.back();
+        return minStack->min;
     }
 };
 
