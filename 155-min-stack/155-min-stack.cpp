@@ -1,14 +1,16 @@
 class Node
 {
+
     public:
         int elem;
         int min;
-        Node* next = nullptr;
         Node* prev = nullptr;
         Node(){}
-        Node(int elem)
+        Node(int elem, int min, Node* prev)
         {
             this->elem = elem;
+            this->min = min;
+            this->prev = prev;
         }
 };
 class MinStack {
@@ -19,23 +21,13 @@ public:
     
     void push(int val) {
         if(minStack == nullptr)
-        {
-            minStack = new Node(val);
-            minStack->elem = val;
-            minStack->min = val;
-        }
+            minStack = new Node(val, val, nullptr);
         else
-        {
-            minStack->next = new Node(val);
-            minStack->next->prev = minStack;
-            minStack = minStack->next;
-            minStack->min = min(val, minStack->prev->min);
-        }
+            minStack = new Node(val, min(val, minStack->min), minStack);
     }
     
     void pop() {
         minStack = minStack->prev;
-        if(minStack) minStack->next = nullptr;
     }
     
     int top() {
