@@ -7,7 +7,7 @@ public:
             cur = s[i] != '0' ? next : 0;
             if(i + 1 < s.size() && ((s[i] == '2' && s[i + 1] <= '6') || s[i] == '1'))
                 cur += next_two;
-            next_two = next;
+            swap(next_two, next);
             next = cur;
         }
         return cur;
