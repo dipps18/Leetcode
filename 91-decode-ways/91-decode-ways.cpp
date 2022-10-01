@@ -8,8 +8,8 @@ public:
             if(i + 1 < s.size() && ((s[i] == '2' && s[i + 1] <= '6') || s[i] == '1'))
                 cur += next_two;
             swap(next_two, next);
-            next = cur;
+            swap(next, cur);
         }
-        return cur;
+        return next;
     }
 };
