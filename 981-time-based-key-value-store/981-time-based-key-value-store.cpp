@@ -10,10 +10,6 @@ public:
     
     string get(string key, int timestamp) {
         if(mp.find(key) == mp.end()) return "";
-        if(mp[key].find(timestamp) != mp[key].end())
-            return mp[key][timestamp];
-        
-        //Since it is stored in decreasing order
         auto it = mp[key].upper_bound(timestamp);
         if(it == mp[key].begin()) return "";
         return prev(it)->second;
