@@ -1,6 +1,6 @@
 class TimeMap {
 public:
-    unordered_map<string, map<int, string, greater<int>>> mp;
+    unordered_map<string, map<int, string>> mp;
     TimeMap() {
     }
     
@@ -14,10 +14,9 @@ public:
             return mp[key][timestamp];
         
         //Since it is stored in decreasing order
-        for(auto [prev_timestamp, val] : mp[key])
-            if(prev_timestamp <= timestamp)
-                return val;
-        return "";
+        auto it = mp[key].upper_bound(timestamp);
+        if(it == mp[key].begin()) return "";
+        return prev(it)->second;
     }
 };
 
