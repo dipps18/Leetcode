@@ -16,7 +16,7 @@ public:
         return dfs(root, dict, k);   
     }
     
-    bool dfs(TreeNode* root, unordered_map<int, int>& dict, int& k)
+    bool dfs(TreeNode* &root, unordered_map<int, int>& dict, int& k)
     {
         if(root == nullptr) return false;
         if(dict[k - root->val]) return true;
