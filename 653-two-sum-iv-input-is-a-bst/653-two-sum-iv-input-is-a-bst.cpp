@@ -12,15 +12,15 @@
 class Solution {
 public:
     bool findTarget(TreeNode* root, int k) {
-        unordered_map<int, int> dict;
-        return dfs(root, dict, k);   
+        unordered_set<int> set;
+        return dfs(root, set, k);   
     }
     
-    bool dfs(TreeNode* &root, unordered_map<int, int>& dict, int& k)
+    bool dfs(TreeNode* &root, unordered_set<int>& set, int& k)
     {
         if(root == nullptr) return false;
-        if(dict[k - root->val]) return true;
-        dict[root->val]++;
-        return dfs(root->right, dict, k) || dfs(root->left, dict, k);
+        if(set.find(k - root->val) != set.end()) return true;
+        set.insert(root->val);
+        return dfs(root->right, set, k) || dfs(root->left, set, k);
     }
 };
