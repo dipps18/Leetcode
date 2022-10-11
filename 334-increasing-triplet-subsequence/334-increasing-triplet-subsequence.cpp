@@ -9,8 +9,6 @@ public:
             {
                 x = nums[i];
                 min_x = min(nums[i], min_x);
-                y = INT_MAX;
-                z = INT_MAX;
             }
             else if(nums[i] > x || nums[i] > min_x)
             {
