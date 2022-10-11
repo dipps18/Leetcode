@@ -12,9 +12,9 @@ public:
             }
             else if(nums[i] > x || nums[i] > min_x)
             {
-                if(nums[i] < y)
+                if(nums[i] <= y)
                     y = nums[i];
-                else if(nums[i] > y)
+                else
                     return true;
             }
             else if(nums[i] < min_x)
