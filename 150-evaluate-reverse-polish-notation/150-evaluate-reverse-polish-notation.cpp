@@ -2,10 +2,9 @@ class Solution {
 public:
     int evalRPN(vector<string>& tokens) {
         stack<long> operands;
-        string operators = "+-/*";
         for(string t : tokens)
         {
-            if(operators.find(t) != string::npos && t.length() == 1)
+            if(t =="+" || t =="-" || t == "/" || t == "*")
             {
                 long num2 = operands.top();
                 operands.pop();
