@@ -5,11 +5,16 @@ public:
         int maxArea = 0;
         while(left < right)
         {
-            maxArea = max(maxArea, (right - left) * min(height[right], height[left]));
             if(height[left] < height[right])
+            {
+                maxArea = max(maxArea, (right - left)*height[left]);
                 left++;
+            }
             else
+            {
+                maxArea = max(maxArea, (right - left)*height[right]);
                 right--;
+            }
         }
         return maxArea;
     }
