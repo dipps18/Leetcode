@@ -5,7 +5,7 @@ string minWindow(string s, string t) {
     vector<int> dict(128, 0), have(128, 0);
     queue<int> positions;
     string res = "";
-    int right = 0, left = 0, count = 0, minSize = INT_MAX, minL = -1, minR = 0;
+    int right = 0, left = 0, count = 0, minL = -1, minR = s.size() - 1;
     for (char c : t)
         dict[c - 'A']++;
     
@@ -20,11 +20,10 @@ string minWindow(string s, string t) {
                 positions.push(right);
             while (count == t.size())
             {
-                if (minSize > right - left + 1)
+                if (minR - minL + 1 > right - left + 1)
                 {
                     minL = left;
                     minR = right;
-                    minSize = right - left + 1;
                 }
                 if (--have[s[left] - 'A'] < dict[s[left] - 'A'])
                     count--;
