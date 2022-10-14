@@ -23,8 +23,8 @@ public:
             head->next = nullptr;
             return head;
         }
-        p->val = p->next->val;
-        p->next = p->next->next;
+        swap(p->val, p->next->val);
+        swap(p->next, p->next->next);
         return head;
     }
 };
