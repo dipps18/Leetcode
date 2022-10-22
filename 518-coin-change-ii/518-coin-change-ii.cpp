@@ -1,7 +1,7 @@
 class Solution {
 public:
     int change(int amount, vector<int>& coins) {
-        vector<vector<int>> dp(301, vector<int>(5001, -1));
+        vector<vector<int>> dp(coins.size() + 1, vector<int>(amount + 1, -1));
         return dfs(amount, 0, coins, dp);
     }
     
