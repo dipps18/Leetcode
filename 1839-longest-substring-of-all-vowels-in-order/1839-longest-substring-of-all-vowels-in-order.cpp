@@ -5,11 +5,11 @@ public:
         
         int l = 1, r = 1;
         int currentCount = 1, maxCount = 0;
-        std::vector<char> vowels = {'a','e','i','o','u'};
-        std::unordered_map<char, char> succeeding;
+        char vowels[5] = {'a','e','i','o','u'};
+        char succeeding[128];
         int differentCharCount = 1;
         
-        for(int i = 0; i < vowels.size() - 1; i++)
+        for(int i = 0; i < 4; i++)
         {
             succeeding[vowels[i]] = vowels[i + 1];
         }
